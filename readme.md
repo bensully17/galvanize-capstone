@@ -6,7 +6,7 @@ Do you ever walk into a wine shop and feel overwhelmed by the selection in front
 
 ## How will MyCellar solve the problem?
 
-My cellar is a mobile app that allows users to create a virtual personal "cellar" that keeps a record of the wines the user has previously had. The user can import photos of their bottles and give ratings to reference in the future. As more and more users adopt the app, users will be able to receive recommendations based on their virtual "palate", as well as share experiences with friends in a socially interactive manner.
+MyCellar is a mobile app that allows users to create a virtual personal "cellar" that keeps a record of the wines the user has previously had. The user can import photos of their bottles and give ratings to reference in the future. As more and more users adopt the app, users will be able to receive recommendations based on their virtual "palate", as well as share experiences with friends in a socially interactive manner.
 
 ## Map the User experience
 
