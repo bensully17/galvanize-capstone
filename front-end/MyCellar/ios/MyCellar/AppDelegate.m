@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import <React/RCTBundleURLProvider.h>
 
-#import "RCCManager.h"
+#import "/Users/ben/galvanize/capstone-frontend/galvanize-capstone/front-end/MyCellar/node_modules/react-native-navigation/ios/RCCManager.h"
 
 #import <React/RCTRootView.h>
 

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
 import { Drawer } from 'native-base'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
+import WineDetail from '../../components/wineDetail/wineDetail'
 
 
 class Cellar extends Component {
@@ -42,13 +43,25 @@ class Cellar extends Component {
       }
     }
   }
+
+viewModal = () => {
+  this.props.navigator.showModal({
+  screen: "MyCellar.WineDetail", // unique ID registered with Navigation.registerScreen
+  title: "The Prisoner", // title of the screen as appears in the nav bar (optional)
+  passProps: {
+    itemName: 'The Prisoner'
+  }, // simple serializable object that will pass as props to the modal (optional)
+  navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+  animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+});
+}
+
   render () {
     return (
       <View style={styles.topContainer}>
-        <View style={styles.list}>
-          <ListItem itemName='Item Number 1' ></ListItem>
-          <ListItem itemName='Item Number 2' ></ListItem>
-        </View>
+        <TouchableOpacity style={styles.list} onPress={this.viewModal}>
+          <ListItem itemName='The Prisoner' ></ListItem>
+        </TouchableOpacity>
       </View>
     )
   }

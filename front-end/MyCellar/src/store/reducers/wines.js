@@ -5,7 +5,7 @@ const initialState = {
   selectedWine: null
 }
 
-const reducer = (state = initialState, action) => {
+const wines = (state = initialState, action) => {
   switch (action.type) {
     case ADD_WINE:
       return {
@@ -23,10 +23,21 @@ const reducer = (state = initialState, action) => {
         }),
         selectedWine: null
       }
-
+    case SELECT_WINE:
+      return {
+        ...state,
+        selectedWine: state.wines.find(wine => {
+          return wine.key === action.wineKey
+        })
+      }
+    case DESELECT_WINE:
+      return {
+        ...state,
+        selectedWine: null
+      }
     default:
       return state
   }
 }
 
-export default reducer
+export default wines
