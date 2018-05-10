@@ -4,8 +4,7 @@ import { Drawer } from 'native-base'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
 
-
-class Cellar extends Component {
+class AddWine extends Component {
   static navigatorStyle = {
     navBarTextColor: 'silver',
     drawUnderNavBar: false,
@@ -45,19 +44,37 @@ class Cellar extends Component {
   }
   render () {
     return (
-      <View style={styles.container}>
-        <ListItem itemName='Item Number 1'></ListItem>
+      <View style={styles.topContainer}>
+        <View style={styles.form}>
+          <TextInput placeholder='Wine Name' style={styles.textInput}></TextInput>
+          <TextInput placeholder='Wine Maker' style={styles.textInput}></TextInput>
+        </View>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  topContainer: {
+    flex: 1, 
     width: '100%',
     padding: 10,
-    backgroundColor: '#eee'
-  }
+    alignItems: 'center',
+    backgroundColor: '#800020'
+  },
+  form: {
+    width: '100%',
+    alignItems: 'center'
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 4,
+    width: '80%',
+    margin: 5,
+    padding: 10,
+    backgroundColor: '#eee', 
+  },
 })
 
-export default Cellar
+export default AddWine
