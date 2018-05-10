@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 70,
     fontFamily: 'Savoye LET',
-    color: 'silver',
-    // flex: 1
+    color: '#222',
+    fontWeight: 'bold'
   },
   image: {
     marginBottom: '10%'
