@@ -38,10 +38,11 @@ class AuthScreen extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 70,
-    fontFamily: 'Savoye LET',
-    color: '#222',
-    fontWeight: 'bold'
+    fontSize: 30,
+    fontFamily: 'GillSans',
+    color: '#ddd',
+    fontWeight: 'bold',
+    padding: 20
   },
   image: {
     marginBottom: '10%'
