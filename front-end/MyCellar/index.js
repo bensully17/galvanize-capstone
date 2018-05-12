@@ -6,13 +6,12 @@ import configureStore from './src/store/configureStore'
 
 const store = configureStore()
 
-const RNRedux = () => {
-    return (
+const RNRedux = () => (
     <Provider store={store}>
         <App/>
     </Provider>
     )
-}
 
 
-AppRegistry.registerComponent('MyCellar', () => App);
+
+AppRegistry.registerComponent('MyCellar', () => RNRedux);

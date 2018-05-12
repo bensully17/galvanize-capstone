@@ -11,19 +11,26 @@ const CustomButton = props => (
 
 const styles = StyleSheet.create({
   button: {
-    padding: 7,
-    margin: 5,
-    borderRadius: 5,
+    marginTop: '3%',
+    padding: 10,
     borderWidth: 1,
     borderColor: '#333',
-    backgroundColor: '#ddd',
+    backgroundColor: '#004467',
     shadowColor: 'black',
     shadowRadius: 4,
     shadowOpacity: .5,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    width: '100%',
+    alignItems: 'center',
+    borderRadius: 4
   },
   text: {
-    color: 'rgb(0, 100, 197)',
-    fontWeight: 'bold'
+    color: '#eee',
+    fontWeight: 'bold',
+    fontSize: 18
   }
 })
 

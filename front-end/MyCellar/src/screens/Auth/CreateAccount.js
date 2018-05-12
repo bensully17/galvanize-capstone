@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Image, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import startTabs from '../../Navigation/StartMainTabs'
@@ -7,10 +7,9 @@ import CustomButton from '../../components/CustomButton/CustomButton'
 import image from '../../../Assets/cheers.png'
 import { uiStartLoading, uiStopLoading, authSetToken } from '../../store/actions/index'
 
-class AuthScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
+
+
+class CreateAccount extends Component {
   state = {
     email: null,
     password: null
@@ -23,10 +22,8 @@ class AuthScreen extends Component {
     navBarBackgroundColor: '#590000',
     navBarHidden: true
   }
- 
-  loginHandler = () => {
-    this.props.startLoading()
-    fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyB-WGcSiufW3WEIJ8ymWQRbTGQTAuEXKmU', {
+  submitHandler = () => {
+    fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyB-WGcSiufW3WEIJ8ymWQRbTGQTAuEXKmU', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -42,13 +39,13 @@ class AuthScreen extends Component {
       alert('Authentication Failed, Please Try Again!')
     })
     .then(res => res.json())
-    .then(res => { 
-      if(res.error) {
-        if (res.error.message === "INVALID_PASSWORD") {
-          alert('Incorrect password, please try again.')
+    .then(res => {  
+      if (res.error) {
+        if (res.error.message === "EMAIL_EXISTS") {
+          alert('This email address is already associated with a user account. Please try logging in or select "forgot password".')
         }
-        else if(res.error.message === "EMAIL_NOT_FOUND") {
-          alert('Email not found, please try again.')
+        else if(res.error.message === "TOO_MANY_ATTEMPTS_TRY_LATER") {
+          alert('We have blocked all requests from this device due to unusual activity. Try again later.')
         }
         else if(res.error.message === "USER_DISABLED") {
           alert('The user account has been disabled by an administrator.')
@@ -56,7 +53,7 @@ class AuthScreen extends Component {
         else if(res.error) {
           alert(res.error.message)
         }
-      } 
+      }
       else { 
         this.props.stopLoading()
         startTabs()
@@ -70,36 +67,18 @@ class AuthScreen extends Component {
   passInputHandler = (event) => {
     this.setState({password: event}); 
   }
-  startCreateAccount = () => {
-    this.props.navigator.push({
-      screen: 'MyCellar.CreateAccount', 
-      title: 'Create Account'
-    });
-  }
-  startForgotPassword = () => {
-    this.props.navigator.push({
-      screen: 'MyCellar.ForgotPass',
-      title: 'Reset Password'
-    })
-  }
 
   render () {
-    let submitButton = (
-      <CustomButton onPress={this.loginHandler}>Sign In</CustomButton>
-    )
-    if (this.props.isLoading) {
-      submitButton = <ActivityIndicator />
-    }
     return (
       <View style={styles.container} >
         <Image source={image} style={styles.image}maxHeight='30%' maxWidth='50%'></Image>
-        <Text style={styles.text}>MyCellar</Text>
         <TextInput placeholder='Email' style={styles.textInput} onChangeText={this.emailInputHandler}></TextInput>
         <TextInput placeholder='Password' style={styles.textInput} secureTextEntry={true} onChangeText={this.passInputHandler}></TextInput>
         <View style={styles.button}>
-          {submitButton}
-          <CustomButton onPress={this.startCreateAccount}>Create New Account</CustomButton>
-          <Button color='#eee' onPress={this.startForgotPassword} title='Forgot Password'></Button>
+          <CustomButton onPress={this.submitHandler}>Submit</CustomButton>
+        </View>
+        <View style={styles.button}>
+          <CustomButton>Back to Login</CustomButton>
         </View>
       </View>
     )
@@ -107,9 +86,6 @@ class AuthScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  forgot: {
-    color: '#eee'
-  },
   text: {
     fontSize: 30,
     fontFamily: 'GillSans',
@@ -125,25 +101,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#800020',
-    paddingTop: '10%',
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingTop: '10%'
+
   },
   textInput: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 3,
-    width: '100%',
+    width: '99%',
+    margin: 5,
     padding: 10,
-    backgroundColor: '#eee',
-    marginTop: '3%',
+    backgroundColor: '#eee', 
   },
   button: {
-    width: '80%',
-    marginTop: '10%'
+    width: '100%'
   }
 })
-
 const mapStateToProps = state => {
   return {
     isLoading: state.ui.isLoading,
@@ -165,4 +138,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAccount)

@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
-import prisoner from '/Users/ben/galvanize/capstone-frontend/galvanize-capstone/front-end/MyCellar/Assets/the-prisoner-wine-company-the-prisoner-1193399-s43_p.jpg'
-
+import prisoner from '../../../Assets/Prisoner.jpg'
 const ListItem = (props) => {
   return(
     <View style={styles.listItem}>
@@ -19,7 +18,6 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     borderColor: '#333',
     borderWidth: 1,
-    margin: 3,
     backgroundColor: '#eeeeee',
     borderRadius: 5,
     shadowColor: 'black',

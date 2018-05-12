@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1, 
     width: '100%',
-    padding: 10,
+    padding: '2%',
     alignItems: 'center',
     backgroundColor: '#800020'
   },
   list: {
-    width: '80%',
+    width: '100%',
   }
   
 })

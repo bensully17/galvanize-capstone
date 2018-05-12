@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import <React/RCTBundleURLProvider.h>
 
-#import "/Users/ben/galvanize/capstone-frontend/galvanize-capstone/front-end/MyCellar/node_modules/react-native-navigation/ios/RCCManager.h"
+#import "RCCManager.h"
 
 #import <React/RCTRootView.h>
 
@@ -23,7 +23,8 @@
 //  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 //#else
   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-//#endif
+  //#enimport { connect } from 'react-redux'
+dif
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
