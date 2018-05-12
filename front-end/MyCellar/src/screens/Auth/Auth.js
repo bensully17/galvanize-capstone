@@ -23,7 +23,7 @@ class AuthScreen extends Component {
     navBarBackgroundColor: '#590000',
     navBarHidden: true
   }
- 
+  
   loginHandler = () => {
     this.props.startLoading()
     fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyB-WGcSiufW3WEIJ8ymWQRbTGQTAuEXKmU', {
@@ -57,8 +57,11 @@ class AuthScreen extends Component {
           alert(res.error.message)
         }
       } 
-      else { 
+      else {
         this.props.stopLoading()
+        console.log(res)
+        
+        this.props.setToken(res.idToken)
         startTabs()
       }
     })
@@ -154,13 +157,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     startLoading: function() {
-      return dispatch(uiStartLoading)
+      return dispatch(uiStartLoading())
     },
     stopLoading: function() {
-      return dispatch(uiStopLoading)
+      return dispatch(uiStopLoading())
     },
-    setToken: function() {
-      return dispatch(authSetToken)
+    setToken: function(token) {
+      return dispatch(authSetToken(token))
     }
   }
 }

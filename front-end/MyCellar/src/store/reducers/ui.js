@@ -18,8 +18,8 @@ const reducer = (state = initialState, action) => {
         isLoading: false
       };
     default:
-      return state;
+      return state
   }
 };
 
-export default reducer;
+export default reducer
