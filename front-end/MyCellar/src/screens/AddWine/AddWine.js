@@ -92,11 +92,12 @@ class AddWine extends Component {
 
   openVintagePicker = () => {
     this.props.navigator.showModal({
-    screen: "MyCellar.VintagePicker", // unique ID registered with Navigation.registerScreen
-    title: "Pick a Vintage", // title of the screen as appears in the nav bar (optional)
-    animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+    screen: "MyCellar.VintagePicker", 
+    title: "Pick a Vintage",
+    animationType: 'slide-up' 
     })
   }
+  
   render () {
     return (
       <View style={styles.topContainer}>
@@ -114,8 +115,7 @@ class AddWine extends Component {
           <TextInput placeholder='Wine Maker' style={styles.textInput}></TextInput>
           <TextInput placeholder='Varietal(s)' style={styles.textInput}></TextInput>
           <TextInput placeholder='Notes' style={styles.notes} multiline={true}></TextInput>
-        </View>
-        
+        </View> 
       </View>
     )
   }
@@ -172,10 +172,10 @@ const styles = StyleSheet.create({
   pickImage: {
     width: '100%',
     marginTop: '2%',
-    flex: 3
+    flex: 4
   },
   picker: {
-    flex: 4,
+    flex: 2,
     justifyContent: 'flex-end',
     marginBottom: 10,
     width: '37%',

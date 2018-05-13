@@ -9,7 +9,6 @@ class PickImage extends Component {
     pickedImage: null
   }
 
-
   render() {
     return (
      <View style={styles.container}>
@@ -17,7 +16,7 @@ class PickImage extends Component {
          <Image source={this.props.selectedImage} style={styles.previewImage}></Image>
        </View>
        <View style={styles.button}>
-         <CustomButtonSmall  onPress={this.props.selectImage}>Select an Image</CustomButtonSmall>
+         <CustomButtonSmall onPress={this.props.selectImage}>Select an Image</CustomButtonSmall>
        </View>
      </View>
     );
@@ -27,23 +26,27 @@ class PickImage extends Component {
 const styles = StyleSheet.create({
   container: {
       width: "100%",
-      alignItems: "center"
+      alignItems: "center",
+      flex: 1
   },
   placeholder: {
     borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#ddd",
-    width: "40%",
+    width: '40%',
     height: '100%',
-    borderRadius: 5
+    borderRadius: 5,
+    flex: 4
   },
   button: {
     marginTop: 10,
-    width: '37%'
+    width: '37%',
+    flex: 1
   },
   previewImage: {
       width: "100%",
       height: "100%",
+      flex: 1
   }
 });
 
