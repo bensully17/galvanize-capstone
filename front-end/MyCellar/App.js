@@ -8,7 +8,8 @@ import AddWine from './src/screens/AddWine/AddWine'
 import WineDetail from './src/components/wineDetail/wineDetail'
 import CreateAccount from './src/screens/Auth/CreateAccount'
 import ForgotPass from './src/screens/Auth/ForgotPass'
-import configureStore from './src/store/configureStore';
+import configureStore from './src/store/configureStore'
+import VintagePicker from './src/components/VintagePicker/VintagePicker'
 
 const store = configureStore()
 
@@ -20,6 +21,8 @@ Navigation.registerComponent('MyCellar.AddWine', () => AddWine, store, Provider)
 Navigation.registerComponent('MyCellar.WineDetail', () => WineDetail, store, Provider)
 Navigation.registerComponent('MyCellar.CreateAccount', () => CreateAccount, store, Provider)
 Navigation.registerComponent('MyCellar.ForgotPass', () => ForgotPass, store, Provider)
+Navigation.registerComponent('MyCellar.VintagePicker', () => VintagePicker, store, Provider)
+
 
 //Start an app
 Navigation.startSingleScreenApp({

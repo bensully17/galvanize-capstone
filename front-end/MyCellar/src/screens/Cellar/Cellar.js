@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: '2%',
     alignItems: 'center',
-    backgroundColor: '#800020'
+    backgroundColor: 'rgba(107,10,24,.7)'
   },
   list: {
     width: '100%',

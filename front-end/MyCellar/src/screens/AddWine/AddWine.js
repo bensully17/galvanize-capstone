@@ -1,10 +1,53 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Picker } from 'react-native'
 import { Drawer } from 'native-base'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
+import ImagePicker from 'react-native-image-picker'
+import PickImage from '../../components/PickImage/PickImage'
+import { connect } from 'react-redux'
+import { newWineGrapes, newWineMaker, newWineName, newWineNotes, newWineVarietal, newWineVintage } from '../../store/actions/index' 
+import CustomButtonSmall from '../../components/CustomButton/small'
+
+
 
 class AddWine extends Component {
+  state = {
+    vintages: null,
+    selectedImage: null
+  }
+  componentWillMount() {
+    let currentDate = new Date(Date.now())
+    let currentYear = currentDate.getFullYear()
+    let vintageArray = []
+    let vintageStringArray = []
+    let componentArray = []
+    for (i = 1950; i <= currentYear; i++) {
+      vintageArray.push(i)
+    }
+    vintageArray.forEach(year => {
+      return (vintageStringArray.push(year.toString()))
+    })
+    vintageStringArray.forEach(year => {
+      return(componentArray.push(<Picker.Item label={year} value={year} key={Math.random()}/>))
+    })
+    this.setState({vintages: componentArray.reverse()})
+  }
+
+  pickImageHandler = () => {
+    ImagePicker.showImagePicker({title: 'Select an Image', maxWidth: 800, maxHeight: 600}, res => {
+      if (res.didCancel) {console.log('User Cancelled')}
+      else if (res.error) {
+        console.log('Error', res.error)
+      }
+      else {
+        this.setState({
+          selectedImage: { uri: res.uri, base64: res.data }
+        })
+      }
+    })
+  }
+
   static navigatorStyle = {
     navBarTextColor: 'silver',
     drawUnderNavBar: false,
@@ -42,13 +85,37 @@ class AddWine extends Component {
       }
     }
   }
+
+  vintageUpdateHandler = (value) => {
+    this.props.updateVintage(value)
+  }
+
+  openVintagePicker = () => {
+    this.props.navigator.showModal({
+    screen: "MyCellar.VintagePicker", // unique ID registered with Navigation.registerScreen
+    title: "Pick a Vintage", // title of the screen as appears in the nav bar (optional)
+    animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+    })
+  }
   render () {
     return (
       <View style={styles.topContainer}>
+        <View style={styles.pickImage}>
+          <PickImage style={styles.pickImage} selectImage={this.pickImageHandler} selectedImage={this.state.selectedImage}/>
+        </View>
+        <View style={styles.picker}>
+          <CustomButtonSmall style={styles.CustomButton} onPress={this.openVintagePicker}>Select a Vintage</CustomButtonSmall> 
+          <View style={styles.vintageContainer}>
+            <Text style={styles.vintage}>{this.props.newVintage}</Text>
+          </View> 
+        </View> 
         <View style={styles.form}>
           <TextInput placeholder='Wine Name' style={styles.textInput}></TextInput>
           <TextInput placeholder='Wine Maker' style={styles.textInput}></TextInput>
+          <TextInput placeholder='Varietal(s)' style={styles.textInput}></TextInput>
+          <TextInput placeholder='Notes' style={styles.notes} multiline={true}></TextInput>
         </View>
+        
       </View>
     )
   }
@@ -60,21 +127,78 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 10,
     alignItems: 'center',
-    backgroundColor: '#800020'
+    justifyContent: 'space-around',
+    backgroundColor: 'rgba(107,10,24,.7)'
   },
   form: {
     width: '100%',
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 5
+  },
+  CustomButton: {
+    width: '100%',
   },
   textInput: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#555',
     borderRadius: 4,
     width: '80%',
     margin: 5,
-    padding: 10,
-    backgroundColor: '#eee', 
+    padding: 6,
+    backgroundColor: '#eeeeee', 
   },
+  vintage: {
+    fontSize: 20,
+    color: '#111',
+    margin: 5,
+    padding: 2,
+  },
+  vintageContainer: {
+    alignItems: 'center'
+  },
+  notes: {
+    width: '80%',
+    borderWidth: 1,
+    borderColor: '#555',
+    borderRadius: 4,
+    width: '80%',
+    margin: 5,
+    paddingTop: 7,
+    paddingLeft: 7,
+    paddingRight: 7,
+    paddingBottom: 45,
+    backgroundColor: '#eeeeee',
+  },
+  pickImage: {
+    width: '100%',
+    marginTop: '2%',
+    flex: 3
+  },
+  picker: {
+    flex: 4,
+    justifyContent: 'flex-end',
+    marginBottom: 10,
+    width: '37%',
+  },
+  pickerText: {
+  },
+  pickerPicker: {
+    height: 100
+  }
 })
 
-export default AddWine
+const mapStateToProps = state => {
+  return {
+    newVintage: state.newWine.vintage
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateVintage: function(vintage) {
+      return dispatch(newWineVintage(vintage))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddWine) 

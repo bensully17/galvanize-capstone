@@ -4,11 +4,13 @@ import thunk from "redux-thunk";
 import winesReducer from "./reducers/wines"
 import uiReducer from "./reducers/ui"
 import authReducer from './reducers/auth'
+import newWineReducer from './reducers/newWine'
 
 const rootReducer = combineReducers({
   wines: winesReducer,
   ui: uiReducer,
-  auth: authReducer
+  auth: authReducer,
+  newWine: newWineReducer
 })
 
 let composeEnhancers = compose;

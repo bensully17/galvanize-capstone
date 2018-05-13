@@ -45,15 +45,19 @@ class AuthScreen extends Component {
     .then(res => { 
       if(res.error) {
         if (res.error.message === "INVALID_PASSWORD") {
+          this.props.stopLoading()
           alert('Incorrect password, please try again.')
         }
         else if(res.error.message === "EMAIL_NOT_FOUND") {
+          this.props.stopLoading()
           alert('Email not found, please try again.')
         }
         else if(res.error.message === "USER_DISABLED") {
+          this.props.stopLoading()
           alert('The user account has been disabled by an administrator.')
         }
         else if(res.error) {
+          this.props.stopLoading()
           alert(res.error.message)
         }
       } 
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#800020',
+    backgroundColor: 'rgba(125, 25, 28, 1)',
     paddingTop: '10%',
     paddingLeft: 24,
     paddingRight: 24,

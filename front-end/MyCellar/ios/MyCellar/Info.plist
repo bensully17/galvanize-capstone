@@ -72,7 +72,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>LSApplicationCategoryType</key>
+	<string/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Enable uploading of wine bottle images.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Enable the phones camera to capture an image of a wine bottle.</string>
 </dict>
 </plist>
