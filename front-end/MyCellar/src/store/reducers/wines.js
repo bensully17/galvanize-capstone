@@ -1,8 +1,9 @@
-import { ADD_WINE, DELETE_WINE, SELECT_WINE, DESELECT_WINE } from '../actions/actionTypes'
+import { ADD_WINE, DELETE_WINE, SELECT_WINE, DESELECT_WINE, USER_WINES} from '../actions/actionTypes'
 
 const initialState = {
   wines: [],
-  selectedWine: null
+  selectedWine: null,
+  userWines: null
 }
 
 const wines = (state = initialState, action) => {
@@ -10,7 +11,7 @@ const wines = (state = initialState, action) => {
     case ADD_WINE:
       return {
         ...state,
-        wines: state.wines.concat({
+          wines: state.wines.concat({
           key: Math.random(),
           name: action.wineName
         })
@@ -34,6 +35,11 @@ const wines = (state = initialState, action) => {
       return {
         ...state,
         selectedWine: null
+      }
+    case USER_WINES:
+      return {
+        ...state,
+        userWines: action.wines
       }
     default:
       return state

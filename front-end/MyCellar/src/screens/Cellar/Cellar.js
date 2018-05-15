@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native'
 import { Drawer } from 'native-base'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
+import { connect } from 'react-redux'
+import { userWines } from '../../store/actions/index'
 import WineDetail from '../../components/wineDetail/wineDetail'
 
 
 class Cellar extends Component {
+  state = {
+    listItems: []
+  }
+
   static navigatorStyle = {
     navBarTextColor: '#fff',
     drawUnderNavBar: false,
@@ -44,35 +50,57 @@ class Cellar extends Component {
     }
   }
 
-viewModal = () => {
-  this.props.navigator.showModal({
-  screen: "MyCellar.WineDetail", // unique ID registered with Navigation.registerScreen
-  title: "The Prisoner", // title of the screen as appears in the nav bar (optional)
-  passProps: {
-    itemName: 'The Prisoner'
-  }, // simple serializable object that will pass as props to the modal (optional)
-  navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
-  animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
-});
-}
+  viewModal = () => {
+    this.props.navigator.showModal({
+    screen: "MyCellar.WineDetail", // unique ID registered with Navigation.registerScreen
+    title: "The Prisoner", // title of the screen as appears in the nav bar (optional)
+    passProps: {
+      itemName: 'The Prisoner'
+    }, // simple serializable object that will pass as props to the modal (optional)
+    navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+    animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+    })
+  }
 
+  componentWillMount() {
+    fetch('https://mycellar-v1.herokuapp.com/usercellars')
+    .then(res => res.json())
+    .then(res => {
+      this.props.updateWines(res.reverse())
+    })
+  }
   render () {
+    console.log('here are the wines: ', this.props.userWines);
+    
     return (
-      <View style={styles.topContainer}>
-        <TouchableOpacity style={styles.list} onPress={this.viewModal}>
-          <ListItem itemName='The Prisoner' ></ListItem>
-        </TouchableOpacity>
-      </View>
+      <FlatList 
+        style={styles.topContainer}
+        data={this.props.userWines}
+        keyExtractor={(item, index) => `${index}`}
+        renderItem={(info) => (<ListItem itemName={info.item.wineName} rating={info.item.rating} disabled={true} itemVarietal={info.item.varietal} imageUrl={info.item.imageURL}/>)}
+        ></FlatList>
     )
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    userWines: state.wines.userWines
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    updateWines: function(wines) {
+      return dispatch(userWines(wines))
+    }
+  }
+}
 const styles = StyleSheet.create({
   topContainer: {
     flex: 1, 
     width: '100%',
-    padding: '2%',
-    alignItems: 'center',
+    paddingLeft: 20,
+    paddingRight: 20,
     backgroundColor: '#fff'
   },
   list: {
@@ -82,4 +110,4 @@ const styles = StyleSheet.create({
   
 })
 
-export default Cellar
+export default connect(mapStateToProps, mapDispatchToProps)(Cellar)

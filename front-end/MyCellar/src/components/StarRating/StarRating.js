@@ -11,11 +11,12 @@ class WineRating extends Component {
   render() {
     return (
       <StarRating
-        disabled={false}
+        disabled={this.props.disabled}
         maxStars={5}
-        // fullStarColor='gold'
         fullStarColor='#cfb53b'
-        rating={this.props.newRating}
+        rating={this.props.rating}
+        starSize={this.props.size}
+        containerStyle={this.props.styling}
         selectedStar={(rating) => this.onStarRatingPress(rating)}
       />
     );

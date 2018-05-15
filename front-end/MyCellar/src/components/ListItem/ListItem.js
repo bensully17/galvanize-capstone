@@ -1,11 +1,17 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
-import prisoner from '../../../Assets/Prisoner.jpg'
+import StarRating from '../../components/StarRating/StarRating'
+
+
 const ListItem = (props) => {
   return(
     <View style={styles.listItem}>
-      <Text>{props.itemName}</Text>
-      <Image source={prisoner} style={styles.image}/>
+      <View style={styles.details}>
+        <Text style={styles.text}>{props.itemName}</Text>
+        <Text style={styles.subText}>{props.itemVarietal}</Text>
+        <StarRating style={styles.stars} size={20} styling={{width: '20%'}} disabled={props.disabled} rating={props.rating}/>
+      </View>
+      <Image source={{uri: props.imageUrl}} style={{ height:70, width: 70 }}/>
     </View>
   )
 }
@@ -14,6 +20,7 @@ const styles = StyleSheet.create({
   listItem: {
     width: '100%',
     padding: 10,
+    marginTop: 15,
     paddingLeft: 30,
     paddingRight: 30,
     borderColor: '#333',
@@ -25,15 +32,23 @@ const styles = StyleSheet.create({
     shadowOpacity: .5,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 1
+  },
+  details: {
+    justifyContent: 'center',
+  },
+  star: {
+    width: '20%'
   },
   image: {
-    maxHeight: 50,
-    maxWidth: 50
+    height: 50,
+    width: 50,
+    flex: 1
   },
   text: {
     color: '#333',
-    fontSize: 12,
+    fontSize: 20,
   }
 })
 

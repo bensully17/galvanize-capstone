@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, Picker, ActivityIndicator } from 'react-native'
-import { Drawer } from 'native-base'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
 import ImagePicker from 'react-native-image-picker'
@@ -193,7 +192,7 @@ class AddWine extends Component {
         <View style={styles.vintage}>
             <CustomButtonSmall onPress={this.openVarietalPicker}>{varietalButton}</CustomButtonSmall>
         </View>
-        <WineRating style={styles.stars}/>
+        <WineRating style={styles.stars} rating={this.props.rating} disabled={false}/>
         {submitButton}
       </View>
     )

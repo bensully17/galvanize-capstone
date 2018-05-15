@@ -1,4 +1,4 @@
-import { ADD_WINE, DELETE_WINE, SELECT_WINE, DESELECT_WINE } from './actionTypes'
+import { ADD_WINE, DELETE_WINE, SELECT_WINE, DESELECT_WINE, USER_WINES } from './actionTypes'
 
 export const addWine = (wineName) => {
   return {
@@ -23,5 +23,12 @@ export const selectWine = (key) => {
 export const deselectWine = () => {
   return {
     type: DESELECT_WINE
+  }
+}
+
+export const userWines = (wines) => {
+  return {
+    type: USER_WINES,
+    wines: wines
   }
 }

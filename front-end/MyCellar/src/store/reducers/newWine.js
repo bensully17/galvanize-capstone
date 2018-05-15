@@ -8,7 +8,7 @@ const initialState = {
   notes: null,
   varietal: null,
   rating: null,
-  imageURL: null
+  imageURL: ''
 }
 
 const reducer = (state=initialState, action) => {
