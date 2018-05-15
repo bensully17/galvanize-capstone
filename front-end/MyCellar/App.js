@@ -10,6 +10,7 @@ import CreateAccount from './src/screens/Auth/CreateAccount'
 import ForgotPass from './src/screens/Auth/ForgotPass'
 import configureStore from './src/store/configureStore'
 import VintagePicker from './src/components/VintagePicker/VintagePicker'
+import VarietalPicker from './src/components/SelectList/WineVarietals'
 
 const store = configureStore()
 
@@ -22,9 +23,10 @@ Navigation.registerComponent('MyCellar.WineDetail', () => WineDetail, store, Pro
 Navigation.registerComponent('MyCellar.CreateAccount', () => CreateAccount, store, Provider)
 Navigation.registerComponent('MyCellar.ForgotPass', () => ForgotPass, store, Provider)
 Navigation.registerComponent('MyCellar.VintagePicker', () => VintagePicker, store, Provider)
+Navigation.registerComponent('MyCellar.VarietalPicker', () => VarietalPicker, store, Provider)
 
 
-//Start an app
+//Start app
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'MyCellar.AuthScreen',

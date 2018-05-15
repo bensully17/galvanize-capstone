@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
     flex: 4
   },
   button: {
-    marginTop: 10,
-    width: '37%',
+    marginTop: '1%',
+    width: '38%',
     flex: 1
   },
   previewImage: {

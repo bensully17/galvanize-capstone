@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     padding: 6,
     borderWidth: 1,
-    borderColor: '#333',
-    backgroundColor: '#004467',
+    borderColor: 'rgba(50,145,255,.5)',
+    backgroundColor: 'rgb(50,145,255)',
     shadowColor: 'black',
     shadowRadius: 4,
     shadowOpacity: .5,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   text: {
-    color: '#eee',
+    color: '#fff',
     fontWeight: 'bold',
     fontSize: 14
   }

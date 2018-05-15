@@ -8,7 +8,7 @@ import WineDetail from '../../components/wineDetail/wineDetail'
 
 class Cellar extends Component {
   static navigatorStyle = {
-    navBarTextColor: 'silver',
+    navBarTextColor: '#fff',
     drawUnderNavBar: false,
     navBarTranslucent: true,
     topBarElevationShadowEnabled: true,
@@ -73,10 +73,11 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: '2%',
     alignItems: 'center',
-    backgroundColor: 'rgba(107,10,24,.7)'
+    backgroundColor: '#fff'
   },
   list: {
     width: '100%',
+    backgroundColor: '#ccc'
   }
   
 })

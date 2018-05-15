@@ -65,7 +65,7 @@ class AuthScreen extends Component {
         this.props.stopLoading()
         console.log(res)
         
-        this.props.setToken(res.idToken)
+        this.props.setToken(res.localId)
         startTabs()
       }
     })
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
     fontFamily: 'GillSans',
-    color: '#ddd',
+    color: '#fff',
     fontWeight: 'bold',
     padding: 20
   },

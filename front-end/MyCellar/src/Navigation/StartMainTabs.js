@@ -7,6 +7,13 @@ const startTabs = () => {
   Icon.getImageSource('md-add', 30)
 ]).then(sources => {
   Navigation.startTabBasedApp({
+    tabsStyle: {
+      tabBarBackgroundColor: '#590000',
+      tabBarLabelColor: '#fff',
+      tabBarButtonColor: '#fff',
+      tabBarSelectedLabelColor: 'rgb(50,145,255)',
+      tabBarSelectedButtonColor: 'rgb(50,145,255)'
+    },
     tabs: [
       {
         label: 'My Cellar',

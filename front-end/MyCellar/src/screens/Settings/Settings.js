@@ -7,7 +7,7 @@ import { Navigation } from 'react-native-navigation'
 
 class Cellar extends Component {
   static navigatorStyle = {
-    navBarTextColor: 'silver',
+    navBarTextColor: '#fff',
     drawUnderNavBar: false,
     navBarTranslucent: true,
     topBarElevationShadowEnabled: true,

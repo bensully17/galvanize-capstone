@@ -1,4 +1,4 @@
-import { NEW_VINTAGE, NEW_WINE_GRAPES, NEW_WINE_MAKER, NEW_WINE_NAME, NEW_WINE_NOTES, NEW_WINE_VARIETAL } from '../actions/actionTypes'
+import { NEW_VINTAGE, NEW_WINE_GRAPES, NEW_WINE_MAKER, NEW_WINE_NAME, NEW_WINE_NOTES, NEW_WINE_VARIETAL, NEW_WINE_RATING, NEW_WINE_IMAGE } from '../actions/actionTypes'
 
 const initialState = {
   vintage: null,
@@ -6,7 +6,9 @@ const initialState = {
   maker: null,
   name: null,
   notes: null,
-  varietal: null
+  varietal: null,
+  rating: null,
+  imageURL: null
 }
 
 const reducer = (state=initialState, action) => {
@@ -40,6 +42,16 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         varietal: action.varietal
+      }
+    case NEW_WINE_RATING:
+      return {
+        ...state,
+        rating: action.rating
+      }
+    case NEW_WINE_IMAGE:
+      return {
+        ...state,
+        imageURL: action.imageURL
       }
     default: 
       return state

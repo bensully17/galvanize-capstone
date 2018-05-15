@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Picker } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Picker, ActivityIndicator } from 'react-native'
 import { Drawer } from 'native-base'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
 import ImagePicker from 'react-native-image-picker'
 import PickImage from '../../components/PickImage/PickImage'
 import { connect } from 'react-redux'
-import { newWineGrapes, newWineMaker, newWineName, newWineNotes, newWineVarietal, newWineVintage } from '../../store/actions/index' 
+import { newWineGrapes, newWineMaker, newWineName, newWineNotes, newWineVarietal, newWineVintage, newWineImage } from '../../store/actions/index' 
+import { uiStartLoading, uiStopLoading } from '../../store/actions/index'
 import CustomButtonSmall from '../../components/CustomButton/small'
-
+import CustomButton from '../../components/CustomButton/CustomButton'
+import WineRating from '../../components/StarRating/StarRating'
 
 
 class AddWine extends Component {
@@ -35,7 +37,7 @@ class AddWine extends Component {
   }
 
   pickImageHandler = () => {
-    ImagePicker.showImagePicker({title: 'Select an Image', maxWidth: 800, maxHeight: 600}, res => {
+    ImagePicker.showImagePicker({title: 'Select an Image', maxWidth: 600, maxHeight: 800}, res => {
       if (res.didCancel) {console.log('User Cancelled')}
       else if (res.error) {
         console.log('Error', res.error)
@@ -49,7 +51,7 @@ class AddWine extends Component {
   }
 
   static navigatorStyle = {
-    navBarTextColor: 'silver',
+    navBarTextColor: '#fff',
     drawUnderNavBar: false,
     navBarTranslucent: true,
     topBarElevationShadowEnabled: true,
@@ -92,30 +94,107 @@ class AddWine extends Component {
 
   openVintagePicker = () => {
     this.props.navigator.showModal({
-    screen: "MyCellar.VintagePicker", 
-    title: "Pick a Vintage",
-    animationType: 'slide-up' 
+      screen: "MyCellar.VintagePicker", 
+      title: "Pick a Vintage",
+      animationType: 'slide-up' 
     })
   }
+  openVarietalPicker = () => {
+    this.props.navigator.showModal({
+      screen: 'MyCellar.VarietalPicker',
+      title: 'Pick a Varietal',
+      animationType: 'slide-up'
+    })
+  }
+
+  updateNameHandler = (name) => {
+    this.props.updateName(name)
+  }
   
+  updateMakerHandler = (maker) => {
+    this.props.updateMaker(maker)
+  }
+
+  updateNotesHandler = (notes) => {
+    this.props.updateNotes(notes)
+  }
+
+  postWineToServer = () => {
+     const data = {
+      "uid": this.props.uid,
+      "wineMaker": this.props.wineMaker,
+      "wineName": this.props.wineName,
+      "vintage": this.props.newVintage,
+      "varietal": this.props.newVarietal,
+      "notes": this.props.notes,
+      "imageURL": this.props.imageURL,
+      "rating": this.props.rating
+    }
+    fetch('https://mycellar-v1.herokuapp.com/usercellars', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log('POST New Wine: ', res)
+        this.props.stopLoading()
+      })
+  }
+
+  postWineHandler = () => {
+   
+    this.props.startLoading()
+    fetch('https://us-central1-mycellar-v1.cloudfunctions.net/storeImage', {
+      method: 'POST',
+      body: JSON.stringify({
+        image: this.state.selectedImage.base64
+      })
+    })
+    .catch(err => console.log(err))
+    .then(res => res.json())
+    .then(parsedRes => {
+      console.log(parsedRes)
+      this.props.imageUpload(parsedRes.imageUrl)
+      console.log('Image URL: ', this.props.imageURL)
+      this.postWineToServer()
+    })
+  }
+    
+
   render () {
+    let varietalButton = 'Select Varietal'
+    let vintageButton = 'Select Vintage'
+    let submitButton = <CustomButton style={styles.submit} onPress={this.postWineHandler}>Add Wine</CustomButton>
+    if (this.props.newVarietal !== null) {
+      varietalButton = `Varietal: ${this.props.newVarietal}`
+    }
+    if (this.props.newVintage !== null) {
+      vintageButton = `Vintage: ${this.props.newVintage}`
+    }
+    if (this.props.isLoading) {
+      submitButton = <ActivityIndicator style={styles.submit}/>
+    }
     return (
       <View style={styles.topContainer}>
         <View style={styles.pickImage}>
           <PickImage style={styles.pickImage} selectImage={this.pickImageHandler} selectedImage={this.state.selectedImage}/>
         </View>
-        <View style={styles.picker}>
-          <CustomButtonSmall style={styles.CustomButton} onPress={this.openVintagePicker}>Select a Vintage</CustomButtonSmall> 
-          <View style={styles.vintageContainer}>
-            <Text style={styles.vintage}>{this.props.newVintage}</Text>
-          </View> 
-        </View> 
         <View style={styles.form}>
-          <TextInput placeholder='Wine Name' style={styles.textInput}></TextInput>
-          <TextInput placeholder='Wine Maker' style={styles.textInput}></TextInput>
-          <TextInput placeholder='Varietal(s)' style={styles.textInput}></TextInput>
-          <TextInput placeholder='Notes' style={styles.notes} multiline={true}></TextInput>
+          <TextInput placeholder='Wine Name' style={styles.textInput} onChangeText={this.updateNameHandler}></TextInput>
+          <TextInput placeholder='Wine Maker' style={styles.textInput} onChangeText={this.updateMakerHandler}></TextInput>
+          <TextInput placeholder='Notes' style={styles.notes} multiline={true} onChangeText={this.updateNotesHandler}></TextInput>
         </View> 
+         <View style={styles.vintage}>
+          <CustomButtonSmall style={styles.CustomButton} onPress={this.openVintagePicker}>{vintageButton}</CustomButtonSmall> 
+        </View> 
+        <View style={styles.vintage}>
+            <CustomButtonSmall onPress={this.openVarietalPicker}>{varietalButton}</CustomButtonSmall>
+        </View>
+        <WineRating style={styles.stars}/>
+        {submitButton}
       </View>
     )
   }
@@ -128,15 +207,12 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: 'rgba(107,10,24,.7)'
+    backgroundColor: '#fff'
   },
   form: {
     width: '100%',
     alignItems: 'center',
     flex: 5
-  },
-  CustomButton: {
-    width: '100%',
   },
   textInput: {
     borderWidth: 1,
@@ -148,10 +224,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#eeeeee', 
   },
   vintage: {
-    fontSize: 20,
-    color: '#111',
-    margin: 5,
+    marginBottom: '3%',
     padding: 2,
+    width: '38%',
+    flex: 1
   },
   vintageContainer: {
     alignItems: 'center'
@@ -162,7 +238,7 @@ const styles = StyleSheet.create({
     borderColor: '#555',
     borderRadius: 4,
     width: '80%',
-    margin: 5,
+    margin: '1%',
     paddingTop: 7,
     paddingLeft: 7,
     paddingRight: 7,
@@ -171,25 +247,31 @@ const styles = StyleSheet.create({
   },
   pickImage: {
     width: '100%',
-    marginTop: '2%',
-    flex: 4
+    marginTop: '1%',
+    marginBottom: '1%',
+    flex: 5
   },
-  picker: {
-    flex: 2,
-    justifyContent: 'flex-end',
-    marginBottom: 10,
-    width: '37%',
+
+  stars: {
+    flex:1
   },
-  pickerText: {
-  },
-  pickerPicker: {
-    height: 100
+  submit: {
+    flex: 1
   }
+
 })
 
 const mapStateToProps = state => {
   return {
-    newVintage: state.newWine.vintage
+    newVintage: state.newWine.vintage,
+    newVarietal: state.newWine.varietal,
+    isLoading: state.ui.isLoading,
+    wineName: state.newWine.name,
+    wineMaker: state.newWine.maker,
+    notes: state.newWine.notes,
+    rating: state.newWine.rating,
+    uid: state.auth.token,
+    imageURL: state.newWine.imageURL
   }
 }
 
@@ -197,6 +279,24 @@ const mapDispatchToProps = dispatch => {
   return {
     updateVintage: function(vintage) {
       return dispatch(newWineVintage(vintage))
+    },
+    updateName: function(name) {
+      return dispatch(newWineName(name))
+    },
+    updateMaker: function(maker) {
+      return dispatch(newWineMaker(maker))
+    },
+    updateNotes: function(notes) {
+      return dispatch(newWineNotes(notes))
+    },
+    startLoading: function() {
+      return dispatch(uiStartLoading())
+    },
+    stopLoading: function() {
+      return dispatch(uiStopLoading())
+    },
+    imageUpload: function(image) {
+      return dispatch(newWineImage(image))
     }
   }
 }
