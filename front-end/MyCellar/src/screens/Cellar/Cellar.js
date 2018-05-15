@@ -34,7 +34,7 @@ class Cellar extends Component {
   }
   constructor(props) {
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.props.navigator.addOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   onNavigatorEvent(event) { 
@@ -48,7 +48,18 @@ class Cellar extends Component {
         })
       }
     }
+    if (event.id === 'bottomTabSelected') {
+      fetch('https://mycellar-v1.herokuapp.com/usercellars')
+        .then(res => res.json())
+        .then(res => {
+          this.props.updateWines(res.reverse())
+        })
+      }
+    if (event.id === 'bottomTabReselected') {
+      this.forceUpdate()
+    }
   }
+
 
   viewModal = () => {
     this.props.navigator.showModal({
@@ -62,16 +73,14 @@ class Cellar extends Component {
     })
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch('https://mycellar-v1.herokuapp.com/usercellars')
     .then(res => res.json())
     .then(res => {
       this.props.updateWines(res.reverse())
     })
   }
-  render () {
-    console.log('here are the wines: ', this.props.userWines);
-    
+  render () {    
     return (
       <FlatList 
         style={styles.topContainer}

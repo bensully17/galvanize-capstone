@@ -33,10 +33,20 @@ const startTabs = () => {
         title: 'Settings',
         icon: sources[1]
       }
-    ]
+    ],
+    passProps: {
+       updateState: () => {
+        fetch('https://mycellar-v1.herokuapp.com/usercellars')
+        .then(res => res.json())
+        .then(res => {
+          this.props.updateWines(res.reverse())
+        })
+      }
+      }
+    })
   })
-})
 }
+
   
 
 export default startTabs

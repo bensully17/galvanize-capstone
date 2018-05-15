@@ -62,9 +62,7 @@ class AuthScreen extends Component {
         }
       } 
       else {
-        this.props.stopLoading()
-        console.log(res)
-        
+        this.props.stopLoading()        
         this.props.setToken(res.localId)
         startTabs()
       }

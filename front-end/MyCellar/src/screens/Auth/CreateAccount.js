@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Image, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import startTabs from '../../Navigation/StartMainTabs'
@@ -23,6 +23,7 @@ class CreateAccount extends Component {
     navBarHidden: true
   }
   submitHandler = () => {
+    this.props.startLoading()
     fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyB-WGcSiufW3WEIJ8ymWQRbTGQTAuEXKmU', {
       method: 'POST',
       headers: {
@@ -42,20 +43,25 @@ class CreateAccount extends Component {
     .then(res => {  
       if (res.error) {
         if (res.error.message === "EMAIL_EXISTS") {
+          this.props.stopLoading()
           alert('This email address is already associated with a user account. Please try logging in or select "forgot password".')
         }
         else if(res.error.message === "TOO_MANY_ATTEMPTS_TRY_LATER") {
+          this.props.stopLoading()          
           alert('We have blocked all requests from this device due to unusual activity. Try again later.')
         }
         else if(res.error.message === "USER_DISABLED") {
+          this.props.stopLoading()          
           alert('The user account has been disabled by an administrator.')
         }
         else if(res.error) {
+          this.props.stopLoading()          
           alert(res.error.message)
         }
       }
       else { 
         this.props.stopLoading()
+        this.props.setToken(res.localId)
         startTabs()
       }
     })
@@ -67,18 +73,29 @@ class CreateAccount extends Component {
   passInputHandler = (event) => {
     this.setState({password: event}); 
   }
+  returnLogin = () => {
+    this.props.navigator.push({
+      screen: 'MyCellar.AuthScreen'
+    })
+  }
 
   render () {
+    let submitButton = (
+      <CustomButton onPress={this.submitHandler}>Submit</CustomButton>
+    )
+    if (this.props.isLoading) {
+      submitButton = <ActivityIndicator />
+    }
     return (
       <View style={styles.container} >
         <Image source={image} style={styles.image}maxHeight='30%' maxWidth='50%'></Image>
         <TextInput placeholder='Email' style={styles.textInput} onChangeText={this.emailInputHandler}></TextInput>
         <TextInput placeholder='Password' style={styles.textInput} secureTextEntry={true} onChangeText={this.passInputHandler}></TextInput>
         <View style={styles.button}>
-          <CustomButton onPress={this.submitHandler}>Submit</CustomButton>
+          {submitButton}
         </View>
         <View style={styles.button}>
-          <CustomButton>Back to Login</CustomButton>
+          <CustomButton onPress={this.returnLogin}>Return to Login</CustomButton>
         </View>
       </View>
     )
@@ -127,13 +144,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     startLoading: function() {
-      return dispatch(uiStartLoading)
+      return dispatch(uiStartLoading())
     },
     stopLoading: function() {
-      return dispatch(uiStopLoading)
+      return dispatch(uiStopLoading())
     },
-    setToken: function() {
-      return dispatch(authSetToken)
+    setToken: function(token) {
+      return dispatch(authSetToken(token))
     }
   }
 }
