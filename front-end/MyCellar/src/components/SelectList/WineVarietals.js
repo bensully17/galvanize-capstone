@@ -20,7 +20,7 @@ class VarietalPicker extends Component {
           style={{ height: '80%', width: '100%' }}
           onValueChange={(itemValue) => this.props.updateVarietal(itemValue)}>
           <Picker.Item label='Select a Varietal' value=''/>
-          <Picker.Item label='Blend' value='Blend'/>
+          <Picker.Item label='Red Blend' value='Red Blend'/>
           <Picker.Item label='Barbaresco' value='Barbaresco'/>          
           <Picker.Item label='Barbera' value='Barbera'/>
           <Picker.Item label='Barolo' value='Barolo'/>

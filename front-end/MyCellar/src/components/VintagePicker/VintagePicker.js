@@ -42,6 +42,7 @@ class VintagePicker extends Component {
           selectedValue={this.props.newVintage}
           style={{ height: '80%', width: '100%' }}
           onValueChange={(itemValue) => this.props.updateVintage(itemValue)}>
+          <Picker.Item label='Select a Vintage' value='' key={Math.random()}/>
           {this.state.vintages}
         </Picker>
         <Button title='Select' onPress={dismissModal}></Button>

@@ -54,7 +54,7 @@ class AddWine extends Component {
     drawUnderNavBar: false,
     navBarTranslucent: true,
     topBarElevationShadowEnabled: true,
-    navBarBackgroundColor: '#590000',
+    navBarBackgroundColor: '#500000',
   }
   static navigatorButtons = {
     rightButtons: [
