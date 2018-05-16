@@ -164,10 +164,10 @@ class AddWine extends Component {
     let varietalButton = 'Select Varietal'
     let vintageButton = 'Select Vintage'
     let submitButton = <CustomButton style={styles.submit} onPress={this.postWineHandler}>Add Wine</CustomButton>
-    if (this.props.newVarietal !== null) {
+    if (this.props.newVarietal) {
       varietalButton = `Varietal: ${this.props.newVarietal}`
     }
-    if (this.props.newVintage !== null) {
+    if (this.props.newVintage) {
       vintageButton = `Vintage: ${this.props.newVintage}`
     }
     if (this.props.isLoading) {
