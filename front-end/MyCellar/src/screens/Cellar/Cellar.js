@@ -61,12 +61,13 @@ class Cellar extends Component {
   }
 
 
-  viewModal = () => {
+  viewModal = (info) => {
+    console.log('info: ', info)
     this.props.navigator.showModal({
     screen: "MyCellar.WineDetail", // unique ID registered with Navigation.registerScreen
-    title: "The Prisoner", // title of the screen as appears in the nav bar (optional)
+    title: info.item.wineName,
     passProps: {
-      itemName: 'The Prisoner'
+      itemInfo: info
     }, // simple serializable object that will pass as props to the modal (optional)
     navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
     animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
@@ -86,7 +87,7 @@ class Cellar extends Component {
         style={styles.topContainer}
         data={this.props.userWines}
         keyExtractor={(item, index) => `${index}`}
-        renderItem={(info) => (<ListItem itemName={info.item.wineName} rating={info.item.rating} disabled={true} itemVarietal={info.item.varietal} imageUrl={info.item.imageURL}/>)}
+        renderItem={(info) => (<ListItem itemName={info.item.wineName} onPress={() => this.viewModal(info)} rating={info.item.rating} disabled={true} itemVarietal={info.item.varietal} imageUrl={info.item.imageURL} />)}
         ></FlatList>
     )
   }

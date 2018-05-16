@@ -8,7 +8,7 @@ const initialState = {
   notes: null,
   varietal: null,
   rating: null,
-  imageURL: ''
+  imageURL: 'https://firebasestorage.googleapis.com/v0/b/mycellar-v1.appspot.com/o/wines%2Fa9633184-438a-4b6e-8c9c-c90d89079086.jpg?alt=media&token=a9633184-438a-4b6e-8c9c-c90d89079086'
 }
 
 const reducer = (state=initialState, action) => {

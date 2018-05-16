@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Image, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Image, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import startTabs from '../../Navigation/StartMainTabs'
@@ -96,8 +96,8 @@ class AuthScreen extends Component {
       submitButton = <ActivityIndicator />
     }
     return (
-      <View style={styles.container} >
-        <Image source={image} style={styles.image}maxHeight='30%' maxWidth='50%'></Image>
+      <KeyboardAvoidingView style={styles.container} behavior='padding'>
+        <Image source={image} style={styles.image} maxHeight='30%' maxWidth='80%'></Image>
         <Text style={styles.text}>MyCellar</Text>
         <TextInput placeholder='Email' style={styles.textInput} onChangeText={this.emailInputHandler}></TextInput>
         <TextInput placeholder='Password' style={styles.textInput} secureTextEntry={true} onChangeText={this.passInputHandler}></TextInput>
@@ -106,7 +106,7 @@ class AuthScreen extends Component {
           <CustomButton onPress={this.startCreateAccount}>Create New Account</CustomButton>
           <Button color='#eee' onPress={this.startForgotPassword} title='Forgot Password'></Button>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

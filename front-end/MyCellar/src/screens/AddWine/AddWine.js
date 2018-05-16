@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Picker, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Picker, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
 import ImagePicker from 'react-native-image-picker'
@@ -138,7 +138,6 @@ class AddWine extends Component {
       })
       .then(res => res.json())
       .then(res => {
-        console.log('POST New Wine: ', res)
         this.props.stopLoading()
       })
   }
@@ -155,9 +154,7 @@ class AddWine extends Component {
     .catch(err => console.log(err))
     .then(res => res.json())
     .then(parsedRes => {
-      console.log(parsedRes)
       this.props.imageUpload(parsedRes.imageUrl)
-      console.log('Image URL: ', this.props.imageURL)
       this.postWineToServer()
     })
   }
@@ -177,24 +174,31 @@ class AddWine extends Component {
       submitButton = <ActivityIndicator style={styles.submit}/>
     }
     return (
-      <View style={styles.topContainer}>
-        <View style={styles.pickImage}>
-          <PickImage style={styles.pickImage} selectImage={this.pickImageHandler} selectedImage={this.state.selectedImage}/>
-        </View>
-        <View style={styles.form}>
-          <TextInput placeholder='Wine Name' style={styles.textInput} onChangeText={this.updateNameHandler}></TextInput>
-          <TextInput placeholder='Wine Maker' style={styles.textInput} onChangeText={this.updateMakerHandler}></TextInput>
-          <TextInput placeholder='Notes' style={styles.notes} multiline={true} onChangeText={this.updateNotesHandler}></TextInput>
-        </View> 
-         <View style={styles.vintage}>
-          <CustomButtonSmall style={styles.CustomButton} onPress={this.openVintagePicker}>{vintageButton}</CustomButtonSmall> 
-        </View> 
-        <View style={styles.vintage}>
-            <CustomButtonSmall onPress={this.openVarietalPicker}>{varietalButton}</CustomButtonSmall>
-        </View>
-        <WineRating style={styles.stars} rating={this.props.rating} disabled={false}/>
-        {submitButton}
-      </View>
+      <KeyboardAvoidingView style={styles.topContainer} behavior='padding'>
+          <View style={styles.pickImage}>
+            <PickImage style={styles.pickImage} selectImage={this.pickImageHandler} selectedImage={this.state.selectedImage}/>
+          </View>
+          <View style={styles.form}>
+            <TextInput placeholder='Wine Name' style={styles.textInput} onChangeText={this.updateNameHandler}></TextInput>
+            <TextInput placeholder='Wine Maker' style={styles.textInput} onChangeText={this.updateMakerHandler}></TextInput>
+            <TextInput placeholder='Notes' style={styles.notes} multiline={true} onChangeText={this.updateNotesHandler}></TextInput>
+          </View> 
+          <View style={styles.vintageContainer}>
+            <View style={styles.vintage}>
+              <CustomButtonSmall style={styles.vintage} onPress={this.openVintagePicker}>{vintageButton}</CustomButtonSmall> 
+            </View>
+            <View style={styles.vintage}>
+              <CustomButtonSmall style={styles.vintage} onPress={this.openVarietalPicker}>{varietalButton}</CustomButtonSmall>
+            </View>
+          </View>
+          <View style={styles.stars}>
+            <WineRating style={styles.stars} rating={this.props.rating} disabled={false}/>
+          </View>
+          <View style={styles.submit}>
+            {submitButton}
+          </View>
+          
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -204,6 +208,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     width: '100%',
     padding: 10,
+    marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'space-around',
     backgroundColor: '#fff'
@@ -211,7 +216,7 @@ const styles = StyleSheet.create({
   form: {
     width: '100%',
     alignItems: 'center',
-    flex: 5
+    flex: 3
   },
   textInput: {
     borderWidth: 1,
@@ -223,13 +228,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#eeeeee', 
   },
   vintage: {
-    marginBottom: '3%',
-    padding: 2,
-    width: '38%',
-    flex: 1
+    flex: 1,
+    margin: 5
   },
   vintageContainer: {
-    alignItems: 'center'
+    margin: '1%',
+    padding: 2,
+    width: '100%',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   notes: {
     width: '80%',
@@ -241,7 +249,7 @@ const styles = StyleSheet.create({
     paddingTop: 7,
     paddingLeft: 7,
     paddingRight: 7,
-    paddingBottom: 45,
+    paddingBottom: 20,
     backgroundColor: '#eeeeee',
   },
   pickImage: {
@@ -252,7 +260,7 @@ const styles = StyleSheet.create({
   },
 
   stars: {
-    flex:1
+    flex: 1
   },
   submit: {
     flex: 1

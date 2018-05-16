@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import <React/RCTBundleURLProvider.h>
 
-#import "/Users/benjaminsullivan/galvanize/capstone/galvanize-capstone/front-end/MyCellar/node_modules/react-native-navigation/ios/RCCManager.h"
+#import "/Users/ben/galvanize/galvanize-capstone/front-end/MyCellar/node_modules/react-native-navigation/ios/RCCManager.h"
 
 #import <React/RCTRootView.h>
 
@@ -19,11 +19,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
-//#ifdef DEBUG
-//jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-//#else
+#ifdef DEBUG
+jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+#else
   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-//#endif
+#endif
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];

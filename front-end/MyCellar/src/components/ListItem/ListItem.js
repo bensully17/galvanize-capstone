@@ -1,18 +1,20 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import StarRating from '../../components/StarRating/StarRating'
 
 
 const ListItem = (props) => {
   return(
-    <View style={styles.listItem}>
-      <View style={styles.details}>
-        <Text style={styles.text}>{props.itemName}</Text>
-        <Text style={styles.subText}>{props.itemVarietal}</Text>
-        <StarRating style={styles.stars} size={20} styling={{width: '20%'}} disabled={props.disabled} rating={props.rating}/>
+    <TouchableOpacity onPress={props.onPress}>
+      <View style={styles.listItem}>
+        <View style={styles.details}>
+          <Text style={styles.text}>{props.itemName}</Text>
+          <Text style={styles.subText}>{props.itemVarietal}</Text>
+          <StarRating style={styles.stars} size={20} styling={{width: '20%'}} disabled={props.disabled} rating={props.rating}/>
+        </View>
+        <Image source={{uri: props.imageUrl}} style={{ height:70, width: 70 }}/>
       </View>
-      <Image source={{uri: props.imageUrl}} style={{ height:70, width: 70 }}/>
-    </View>
+    </TouchableOpacity>
   )
 }
 
