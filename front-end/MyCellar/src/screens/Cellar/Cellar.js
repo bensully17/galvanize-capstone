@@ -4,7 +4,7 @@ import { Drawer } from 'native-base'
 import ListItem from '../../components/ListItem/ListItem'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
-import { userWines } from '../../store/actions/index'
+import { userWines, logout } from '../../store/actions/index'
 import WineDetail from '../../components/wineDetail/wineDetail'
 
 
@@ -40,6 +40,7 @@ class Cellar extends Component {
   onNavigatorEvent(event) { 
     if (event.type == 'NavBarButtonPress') { 
       if (event.id == 'logout') { 
+        this.props.logoutAction()
         Navigation.startSingleScreenApp({
           screen: {
             screen: 'MyCellar.AuthScreen',
@@ -49,7 +50,7 @@ class Cellar extends Component {
       }
     }
     if (event.id === 'bottomTabSelected') {
-      fetch('https://mycellar-v1.herokuapp.com/usercellars')
+      fetch(`https://mycellar-v1.herokuapp.com/usercellars/${this.props.uid}`)
         .then(res => res.json())
         .then(res => {
           this.props.updateWines(res.reverse())
@@ -75,33 +76,48 @@ class Cellar extends Component {
   }
 
   componentDidMount() {
-    fetch('https://mycellar-v1.herokuapp.com/usercellars')
+    fetch(`https://mycellar-v1.herokuapp.com/usercellars/${this.props.uid}`)
     .then(res => res.json())
     .then(res => {
       this.props.updateWines(res.reverse())
     })
   }
-  render () {    
-    return (
-      <FlatList 
-        style={styles.topContainer}
-        data={this.props.userWines}
-        keyExtractor={(item, index) => `${index}`}
-        renderItem={(info) => (<ListItem itemName={info.item.wineName} onPress={() => this.viewModal(info)} rating={info.item.rating} disabled={true} itemVarietal={info.item.varietal} imageUrl={info.item.imageURL} />)}
-        ></FlatList>
-    )
+  render () {
+    if(this.props.userWines == null || this.props.userWines.length < 1) {
+      return (
+        <View style={styles.opening}>
+          <Text style={styles.welcome}>Welcome to MyCellar!</Text>
+          <Text style={styles.add}>Add a wine to start your collection!</Text>
+        </View>
+      )
+    }
+    else {
+      return (
+        <FlatList 
+          style={styles.topContainer}
+          data={this.props.userWines}
+          keyExtractor={(item, index) => `${index}`}
+          renderItem={(info) => (<ListItem itemName={info.item.wineName} onPress={() => this.viewModal(info)} rating={info.item.rating} disabled={true} itemVarietal={info.item.varietal} imageUrl={info.item.imageURL} />)}
+          ></FlatList>
+      )
+    }    
+    
   }
 }
 
 const mapStateToProps = state => {
   return {
-    userWines: state.wines.userWines
+    userWines: state.wines.userWines,
+    uid: state.auth.token
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     updateWines: function(wines) {
       return dispatch(userWines(wines))
+    },
+    logoutAction: function() {
+      return dispatch(logout())
     }
   }
 }
@@ -116,6 +132,17 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
     backgroundColor: '#ccc'
+  },
+  opening: {
+    alignItems: 'center',
+    marginTop: 34
+  },
+  welcome: {
+    fontSize: 24,
+    padding: 10
+  },
+  add: {
+    fontSize: 14
   }
   
 })

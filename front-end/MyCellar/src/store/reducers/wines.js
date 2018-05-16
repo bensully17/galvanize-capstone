@@ -1,4 +1,4 @@
-import { ADD_WINE, DELETE_WINE, SELECT_WINE, DESELECT_WINE, USER_WINES} from '../actions/actionTypes'
+import { ADD_WINE, DELETE_WINE, SELECT_WINE, DESELECT_WINE, USER_WINES, LOG_OUT} from '../actions/actionTypes'
 
 const initialState = {
   wines: [],
@@ -40,6 +40,10 @@ const wines = (state = initialState, action) => {
       return {
         ...state,
         userWines: action.wines
+      }
+    case LOG_OUT:
+      return {
+        initialState
       }
     default:
       return state

@@ -5,7 +5,7 @@ import { Navigation } from 'react-native-navigation'
 import ImagePicker from 'react-native-image-picker'
 import PickImage from '../../components/PickImage/PickImage'
 import { connect } from 'react-redux'
-import { newWineGrapes, newWineMaker, newWineName, newWineNotes, newWineVarietal, newWineVintage, newWineImage } from '../../store/actions/index' 
+import { newWineGrapes, newWineMaker, newWineName, newWineNotes, newWineVarietal, newWineVintage, newWineImage, logout } from '../../store/actions/index' 
 import { uiStartLoading, uiStopLoading } from '../../store/actions/index'
 import CustomButtonSmall from '../../components/CustomButton/small'
 import CustomButton from '../../components/CustomButton/CustomButton'
@@ -76,11 +76,11 @@ class AddWine extends Component {
   onNavigatorEvent(event) { 
     if (event.type == 'NavBarButtonPress') { 
       if (event.id == 'logout') { 
+        this.props.logoutAction()
         Navigation.startSingleScreenApp({
           screen: {
             screen: 'MyCellar.AuthScreen',
             title: 'Sign In'
-
           }
         })
       }
@@ -197,7 +197,6 @@ class AddWine extends Component {
           <View style={styles.submit}>
             {submitButton}
           </View>
-          
       </KeyboardAvoidingView>
     )
   }
@@ -304,6 +303,9 @@ const mapDispatchToProps = dispatch => {
     },
     imageUpload: function(image) {
       return dispatch(newWineImage(image))
+    },
+    logoutAction: function() {
+      return dispatch(logout())
     }
   }
 }

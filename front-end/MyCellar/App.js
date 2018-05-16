@@ -3,7 +3,6 @@ import { Provider } from 'react-redux'
 
 import AuthScreen from './src/screens/Auth/Auth'
 import Cellar from './src/screens/Cellar/Cellar'
-import Settings from './src/screens/Settings/Settings'
 import AddWine from './src/screens/AddWine/AddWine'
 import WineDetail from './src/components/wineDetail/wineDetail'
 import CreateAccount from './src/screens/Auth/CreateAccount'
@@ -17,7 +16,6 @@ const store = configureStore()
 //Register Screens
 Navigation.registerComponent('MyCellar.AuthScreen', () => AuthScreen, store, Provider)
 Navigation.registerComponent('MyCellar.Cellar', () => Cellar, store, Provider)
-Navigation.registerComponent('MyCellar.Settings', () => Settings, store, Provider)
 Navigation.registerComponent('MyCellar.AddWine', () => AddWine, store, Provider)
 Navigation.registerComponent('MyCellar.WineDetail', () => WineDetail, store, Provider)
 Navigation.registerComponent('MyCellar.CreateAccount', () => CreateAccount, store, Provider)

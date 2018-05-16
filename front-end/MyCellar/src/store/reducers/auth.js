@@ -1,4 +1,4 @@
-import { AUTH_SET_TOKEN } from "../actions/actionTypes";
+import { AUTH_SET_TOKEN, LOG_OUT } from "../actions/actionTypes"
 
 const initialState = {
   token: null
@@ -10,7 +10,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.token
-      };
+      }
+    case LOG_OUT:
+      return {
+        initialState
+      }
     default:
       return state;
   }

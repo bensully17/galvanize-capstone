@@ -26,12 +26,6 @@ const startTabs = () => {
         screen: 'MyCellar.AddWine',
         title: 'Add a Wine',
         icon: sources[2]
-      },
-      {
-        label: 'Settings',
-        screen: 'MyCellar.Settings',
-        title: 'Settings',
-        icon: sources[1]
       }
     ],
     passProps: {

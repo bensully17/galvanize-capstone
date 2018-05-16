@@ -88,25 +88,36 @@ class CreateAccount extends Component {
     }
     return (
       <View style={styles.container} >
-        <Image source={image} style={styles.image}maxHeight='30%' maxWidth='50%'></Image>
+        <Image source={image} style={styles.image}maxHeight='30%' maxWidth='80%'></Image>
         <TextInput placeholder='Email' style={styles.textInput} onChangeText={this.emailInputHandler}></TextInput>
         <TextInput placeholder='Password' style={styles.textInput} secureTextEntry={true} onChangeText={this.passInputHandler}></TextInput>
-        <View style={styles.button}>
-          {submitButton}
+        <View style={styles.buttonsContainer}>
+          <View style={styles.button}>
+            {submitButton}
+          </View>
+          <View style={styles.button}>
+            <CustomButton onPress={this.returnLogin}>Return to Login</CustomButton>
+          </View>
         </View>
-        <View style={styles.button}>
-          <CustomButton onPress={this.returnLogin}>Return to Login</CustomButton>
-        </View>
+        
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  forgot: {
+    color: '#eee'
+  },
+  buttonsContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: '10%'
+  },
   text: {
     fontSize: 30,
     fontFamily: 'GillSans',
-    color: '#ddd',
+    color: '#fff',
     fontWeight: 'bold',
     padding: 20
   },
@@ -117,21 +128,23 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#800020',
-    paddingTop: '10%'
-
+    backgroundColor: 'rgba(125, 25, 28, 1)',
+    paddingTop: '10%',
+    paddingLeft: 24,
+    paddingRight: 24,
   },
   textInput: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 3,
-    width: '99%',
-    margin: 5,
+    width: '100%',
     padding: 10,
-    backgroundColor: '#eee', 
+    backgroundColor: '#eee',
+    marginTop: '3%',
   },
   button: {
-    width: '100%'
+    width: '80%',
+    // marginTop: '10%'
   }
 })
 const mapStateToProps = state => {

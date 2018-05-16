@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import startTabs from '../../Navigation/StartMainTabs'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import image from '../../../Assets/cheers.png'
 
@@ -19,23 +18,34 @@ class ForgotPass extends Component {
     navBarHidden: true
   }
   submitHandler = () => {
-    fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyB-WGcSiufW3WEIJ8ymWQRbTGQTAuEXKmU', {
+    fetch('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=AIzaSyB-WGcSiufW3WEIJ8ymWQRbTGQTAuEXKmU', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        email: this.state.email,
+        'requestType': "PASSWORD_RESET",
+        'email': this.state.email
       })
     })
-    startTabs()
-  }
+    .then(res => res.json())
+    .then(res => {
+      console.log('forgot: ', res)
+        this.props.navigator.push({
+        screen: 'MyCellar.AuthScreen'
+      })
+      })
+    }
+  
 
   emailInputHandler = (event) => {
     this.setState({email: event}); 
   }
-  passInputHandler = (event) => {
-    this.setState({password: event}); 
+
+  backToLogin = () => {
+    this.props.navigator.push({
+      screen: 'MyCellar.AuthScreen'
+    })
   }
 
   render () {
@@ -47,7 +57,7 @@ class ForgotPass extends Component {
           <CustomButton onPress={this.submitHandler}>Submit</CustomButton>
         </View>
         <View style={styles.button}>
-          <CustomButton>Back to Login</CustomButton>
+          <CustomButton onPress={this.backToLogin}>Back to Login</CustomButton>
         </View>
       </View>
     )
@@ -55,10 +65,13 @@ class ForgotPass extends Component {
 }
 
 const styles = StyleSheet.create({
+  forgot: {
+    color: '#eee'
+  },
   text: {
     fontSize: 30,
     fontFamily: 'GillSans',
-    color: '#ddd',
+    color: '#fff',
     fontWeight: 'bold',
     padding: 20
   },
@@ -69,21 +82,23 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#800020',
-    paddingTop: '10%'
-
+    backgroundColor: 'rgba(125, 25, 28, 1)',
+    paddingTop: '10%',
+    paddingLeft: 24,
+    paddingRight: 24,
   },
   textInput: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 3,
-    width: '99%',
-    margin: 5,
+    width: '100%',
     padding: 10,
-    backgroundColor: '#eee', 
+    backgroundColor: '#eee',
+    marginTop: '3%',
+    marginBottom: '10%'
   },
   button: {
-    width: '100%'
+    width: '80%',
   }
 })
 
