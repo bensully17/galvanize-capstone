@@ -1,4 +1,4 @@
-import { NEW_VINTAGE, NEW_WINE_NAME, NEW_WINE_MAKER, NEW_WINE_VARIETAL, NEW_WINE_GRAPES, NEW_WINE_NOTES, NEW_WINE_RATING, NEW_WINE_IMAGE } from './actionTypes'
+import { NEW_VINTAGE, NEW_WINE_NAME, NEW_WINE_MAKER, NEW_WINE_VARIETAL, NEW_WINE_GRAPES, NEW_WINE_NOTES, NEW_WINE_RATING, NEW_WINE_IMAGE, CLEAR_NEW_WINE } from './actionTypes'
 
 export const newWineVintage = (vintage) => {
   return {
@@ -53,5 +53,11 @@ export const newWineImage = (imageURL) => {
   return {
     type: NEW_WINE_IMAGE,
     imageURL: imageURL
+  }
+}
+
+export const clearWine = () => {
+  return {
+    type: CLEAR_NEW_WINE
   }
 }

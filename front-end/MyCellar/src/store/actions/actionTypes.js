@@ -13,6 +13,7 @@ export const NEW_WINE_GRAPES = "NEW_WINE_GRAPES"
 export const NEW_WINE_NOTES = "NEW_WINE_NOTES"
 export const NEW_WINE_RATING = "NEW_WINE_RATING"
 export const NEW_WINE_IMAGE = "NEW_WINE_IMAGE"
+export const CLEAR_NEW_WINE = "CLEAR_NEW_WINE"
 export const USER_WINES = "USER_WINES"
 export const LOG_OUT = "LOG_OUT"
 

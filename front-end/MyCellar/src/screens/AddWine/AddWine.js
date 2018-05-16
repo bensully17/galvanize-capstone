@@ -5,7 +5,7 @@ import { Navigation } from 'react-native-navigation'
 import ImagePicker from 'react-native-image-picker'
 import PickImage from '../../components/PickImage/PickImage'
 import { connect } from 'react-redux'
-import { newWineGrapes, newWineMaker, newWineName, newWineNotes, newWineVarietal, newWineVintage, newWineImage, logout } from '../../store/actions/index' 
+import { newWineGrapes, newWineMaker, newWineName, newWineNotes, newWineVarietal, newWineVintage, newWineImage, logout, clearWine } from '../../store/actions/index' 
 import { uiStartLoading, uiStopLoading } from '../../store/actions/index'
 import CustomButtonSmall from '../../components/CustomButton/small'
 import CustomButton from '../../components/CustomButton/CustomButton'
@@ -85,6 +85,9 @@ class AddWine extends Component {
         })
       }
     }
+    if (event.id === 'bottomTabSelected') {
+      this.props.clearWine()
+    }
   }
 
   vintageUpdateHandler = (value) => {
@@ -138,6 +141,7 @@ class AddWine extends Component {
       })
       .then(res => res.json())
       .then(res => {
+        this.props.clearWine()
         this.props.stopLoading()
       })
   }
@@ -179,9 +183,9 @@ class AddWine extends Component {
             <PickImage style={styles.pickImage} selectImage={this.pickImageHandler} selectedImage={this.state.selectedImage}/>
           </View>
           <View style={styles.form}>
-            <TextInput placeholder='Wine Name' style={styles.textInput} onChangeText={this.updateNameHandler}></TextInput>
-            <TextInput placeholder='Wine Maker' style={styles.textInput} onChangeText={this.updateMakerHandler}></TextInput>
-            <TextInput placeholder='Notes' style={styles.notes} multiline={true} onChangeText={this.updateNotesHandler}></TextInput>
+            <TextInput placeholder='Wine Name' style={styles.textInput} onChangeText={this.updateNameHandler} value={this.props.wineName}></TextInput>
+            <TextInput placeholder='Wine Maker' style={styles.textInput} onChangeText={this.updateMakerHandler} value={this.props.wineMaker}></TextInput>
+            <TextInput placeholder='Notes' style={styles.notes} multiline={true} onChangeText={this.updateNotesHandler} value={this.props.notes}></TextInput>
           </View> 
           <View style={styles.vintageContainer}>
             <View style={styles.vintage}>
@@ -306,6 +310,9 @@ const mapDispatchToProps = dispatch => {
     },
     logoutAction: function() {
       return dispatch(logout())
+    },
+    clearWine: function() {
+      return dispatch(clearWine())
     }
   }
 }
