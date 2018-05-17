@@ -144,23 +144,33 @@ class AddWine extends Component {
         this.props.clearWine()
         this.props.stopLoading()
       })
+      .then(res => alert('Successfully added to your cellar!'))
+      .catch(err => console.log(err))
   }
 
   postWineHandler = () => {
-   
     this.props.startLoading()
-    fetch('https://us-central1-mycellar-v1.cloudfunctions.net/storeImage', {
-      method: 'POST',
-      body: JSON.stringify({
-        image: this.state.selectedImage.base64
-      })
-    })
-    .catch(err => console.log(err))
-    .then(res => res.json())
-    .then(parsedRes => {
-      this.props.imageUpload(parsedRes.imageUrl)
+    if(this.props.wineName == null) {
+      this.props.stopLoading()
+      return(alert('Wine Name must be provided to add a new wine.'))
+    }
+    else if(this.state.selectedImage == null) {
       this.postWineToServer()
-    })
+    }
+    else {
+      fetch('https://us-central1-mycellar-v1.cloudfunctions.net/storeImage', {
+        method: 'POST',
+        body: JSON.stringify({
+          image: this.state.selectedImage.base64
+        })
+      })
+      .catch(err => console.log(err))
+      .then(res => res.json())
+      .then(parsedRes => {
+        this.props.imageUpload(parsedRes.imageUrl)
+        this.postWineToServer()
+      })
+    }
   }
     
 

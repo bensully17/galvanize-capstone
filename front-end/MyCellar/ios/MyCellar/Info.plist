@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.14</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -25,12 +25,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict/>
-	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<dict/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -68,9 +63,15 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Enable uploading of wine bottle images.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Enable location for vineyard mapping functionality</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Enable location for vineyard mapping functionality</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
 	<string>Enable the phones camera to capture an image of a wine bottle.</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 </dict>
 </plist>
