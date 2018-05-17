@@ -1,0 +1,7 @@
+source 'https://github.com/CocoaPods/Specs.git'
+target 'MyCellar' do
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
+end
+
+project './ios/MyCellar.xcodeproj'

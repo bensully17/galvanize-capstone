@@ -54,4 +54,4 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
-/Users/ben/galvanize/galvanize-capstone/front-end/MyCellar/functions/wines.json
+*/wines.json
