@@ -15,3 +15,5 @@ Users will login using either email & password or using their preferred social m
 ## What technologies do you plan to use?
 
 I plan to develop the front-end of MyCellar in React Native, using Redux to manage state and React Native Navigation for routing. The back-end will be done with NodeJS and PostgreSQL 
+
+![alt text](https://s3-us-west-1.amazonaws.com/bensgalvanizeprojects.com/mycellar.gif)
